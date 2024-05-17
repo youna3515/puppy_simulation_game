@@ -5,7 +5,6 @@ using UnityEngine;
 public class HouseScene : MonoBehaviour
 {
     [SerializeField] GameObject _dogPrefab;
-    [SerializeField] GameObject _roomPrefab;
     [SerializeField] GameObject _houseSceneUIPrefab;
 
     DogController _dog;
@@ -21,11 +20,6 @@ public class HouseScene : MonoBehaviour
         {
             _dog = Instantiate<GameObject>(_dogPrefab).GetComponent<DogController>();
             Camera.main.GetComponent<FollowTarget>().Target = _dog.transform;
-        }
-
-        if (_roomPrefab != null)
-        {
-            Instantiate<GameObject>(_roomPrefab);
         }
 
         if (_houseSceneUIPrefab != null)
