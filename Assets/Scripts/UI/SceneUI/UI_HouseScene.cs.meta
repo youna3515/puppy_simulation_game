@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: c9231a78f52caf5469638b91a723c2af
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _uIDoTaskButtonGridPrefab: {fileID: 8647095338552990272, guid: 1a47f567d8a429a47bbf07c01d482796, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
