@@ -6,7 +6,7 @@ public class HouseScene : MonoBehaviour
 {
     [SerializeField] GameObject _dogPrefab;
     [SerializeField] GameObject _roomPrefab;
-    [SerializeField] GameObject _houseSceneUI;
+    [SerializeField] GameObject _houseSceneUIPrefab;
 
     DogController _dog;
     public DogController Dog
@@ -15,15 +15,11 @@ public class HouseScene : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (_dogPrefab != null)
         {
             _dog = Instantiate<GameObject>(_dogPrefab).GetComponent<DogController>();
-            if (_dog == null)
-            {
-                Debug.LogWarning("Dog NULL");
-            }
             Camera.main.GetComponent<FollowTarget>().Target = _dog.transform;
         }
 
@@ -32,9 +28,9 @@ public class HouseScene : MonoBehaviour
             Instantiate<GameObject>(_roomPrefab);
         }
 
-        if (_houseSceneUI != null)
+        if (_houseSceneUIPrefab != null)
         {
-            Managers.UIManager.CurrentSceneUI = Instantiate<GameObject>(_houseSceneUI).GetComponent<UI_Scene>();
+            Managers.UIManager.CurrentSceneUI = Instantiate<GameObject>(_houseSceneUIPrefab).GetComponent<UI_Scene>();
         }
     }
 

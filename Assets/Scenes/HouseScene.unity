@@ -327,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dogPrefab: {fileID: 1250563891165312132, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
   _roomPrefab: {fileID: 7990104152015532719, guid: 743ff1df17c346741b7704a44a883132, type: 3}
-  _houseSceneUI: {fileID: 0}
+  _houseSceneUIPrefab: {fileID: 9145627513185050086, guid: 1ab37407bd6108c429e62a2c94bc3166, type: 3}
 --- !u!4 &1279128432
 Transform:
   m_ObjectHideFlags: 0
