@@ -17,8 +17,8 @@ public class UIManager
         }
     }
 
-    public void ShowSceneUI()
+    public void ShowSceneUI(GameObject sceneUI)
     {
-
+        ;
     }
 }
