@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class FollowTarget : MonoBehaviour
 {
-    [SerializeField] Transform _target;
+    Transform _target;
+    public Transform Target
+    {
+        set
+        {
+            _target = value;
+        }
+    }
+
     Vector3 _offset;
 
     void Start()
