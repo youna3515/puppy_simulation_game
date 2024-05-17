@@ -5,7 +5,7 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     static Managers s_instance;
-    static Managers instance
+    static Managers Instance
     {
         get
         {
@@ -20,12 +20,21 @@ public class Managers : MonoBehaviour
         }
     }
 
-    UIManager uIManager = new UIManager();
+    InputManager _inputManager = new InputManager();
+    public static InputManager InputManager
+    {
+        get
+        {
+            return Instance._inputManager;
+        }
+    }
+
+    UIManager _uIManager = new UIManager();
     public static UIManager UIManager
     {
         get
         {
-            return instance.uIManager;
+            return Instance._uIManager;
         }
     }
 
@@ -38,6 +47,20 @@ public class Managers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // 마우스 클릭 처리
+        if (Input.GetMouseButtonDown(0))
+        {
+            InputManager.PointerDownInputAction.Invoke(Input.mousePosition);
+        }
+
+        // 터치 입력 처리
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                InputManager.PointerDownInputAction.Invoke(touch.position);
+            }
+        }
     }
 }
