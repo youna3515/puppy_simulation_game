@@ -30,13 +30,13 @@ public class DogController : MonoBehaviour
             switch(_currentState)
             {
                 case DogState.Idle:
-                    _animator.CrossFade("Idle", 0.5f);
+                    _animator.CrossFade("Idle", 0.2f);
                     break;
                 case DogState.Walk:
-                    _animator.CrossFade("Walk", 0.5f);
+                    _animator.CrossFade("Walk", 0.2f);
                     break;
                 case DogState.Run:
-                    _animator.CrossFade("Run", 0.5f);
+                    _animator.CrossFade("Run", 0.2f);
                     break;
                 case DogState.DoTask:
                     break;

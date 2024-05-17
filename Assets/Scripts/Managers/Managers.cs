@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Managers : MonoBehaviour
 {
@@ -50,7 +51,13 @@ public class Managers : MonoBehaviour
         // 마우스 클릭 처리
         if (Input.GetMouseButtonDown(0))
         {
-            InputManager.PointerDownInputAction.Invoke(Input.mousePosition);
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                if (InputManager.PointerDownInputAction != null)
+                {
+                    InputManager.PointerDownInputAction.Invoke(Input.mousePosition);
+                }
+            }
         }
 
         // 터치 입력 처리
@@ -59,8 +66,22 @@ public class Managers : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                InputManager.PointerDownInputAction.Invoke(touch.position);
+                if (!IsPointerOverUIObject(touch))
+                {
+                    InputManager.PointerDownInputAction.Invoke(touch.position);
+                }
             }
         }
+    }
+
+    private bool IsPointerOverUIObject(Touch touch)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(touch.position.x, touch.position.y)
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
     }
 }
