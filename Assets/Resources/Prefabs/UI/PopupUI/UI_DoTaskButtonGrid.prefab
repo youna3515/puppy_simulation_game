@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 3700596696756507164}
   - component: {fileID: 5675141519517008094}
   m_Layer: 5
-  m_Name: GoBathroomButton
+  m_Name: GoToiletButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

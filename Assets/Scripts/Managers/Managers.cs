@@ -39,6 +39,15 @@ public class Managers : MonoBehaviour
         }
     }
 
+    SceneManager _sceneManager = new SceneManager();
+    public static SceneManager SceneManager
+    {
+        get
+        {
+            return Instance._sceneManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

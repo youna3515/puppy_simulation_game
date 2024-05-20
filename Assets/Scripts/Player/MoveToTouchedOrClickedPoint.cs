@@ -60,7 +60,7 @@ public class MoveToTouchedOrClickedPoint : MonoBehaviour
 
     void CheckIfMovementCompleted()
     {
-        if (_agent.remainingDistance <= _agent.stoppingDistance)
+        if ((transform.position - _agent.destination).magnitude <= _agent.stoppingDistance)
         {
             MoveEndAction.Invoke();
             _bIsMoving = false;

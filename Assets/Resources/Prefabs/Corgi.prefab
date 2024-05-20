@@ -142,6 +142,8 @@ GameObject:
   - component: {fileID: -7142754160674691130}
   - component: {fileID: 5729913506808186741}
   - component: {fileID: 3455693563577667830}
+  - component: {fileID: 7214154815341654238}
+  - component: {fileID: 610191347003439090}
   m_Layer: 6
   m_Name: Corgi
   m_TagString: Untagged
@@ -247,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7123ceb3cc6456d48ac109e840098913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _taskOnGoingPrefab: {fileID: 382282638360040239, guid: 52fdf1b75d2c8684d8ef7742892f3621, type: 3}
   _currentState: 0
 --- !u!114 &5729913506808186741
 MonoBehaviour:
@@ -285,6 +288,39 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7214154815341654238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250563891165312132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd9f6b5bb75c564e8fad5b6d295deaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stress: 0
+  _stamina: 100
+  _fullness: 100
+  _cleanliness: 100
+  _toilet: 0
+  _chance: 3
+  _fullnessDecreaseRate: 1
+  _cleanlinessDecreaseRate: 1
+  _staminaDecreaseRate: 1
+--- !u!114 &610191347003439090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250563891165312132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2fc65d3f33a0841922de4adf0fc599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2093560454194026718
 GameObject:
   m_ObjectHideFlags: 0
