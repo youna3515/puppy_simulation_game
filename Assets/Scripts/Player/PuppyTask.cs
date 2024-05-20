@@ -12,7 +12,7 @@ public class PuppyTask : MonoBehaviour
     NavMeshAgent _agent;
     GameObject _taskPoint;
 
-    public Action<DogTask> StartRunToTaskPointAction = null;
+    public Action<PuppyTaskType> StartRunToTaskPointAction = null;
     public Action EndRunToTaskPointAction = null;
 
     bool _bIsRunningToTaskPoint = false;
@@ -26,18 +26,18 @@ public class PuppyTask : MonoBehaviour
     }
 
     [SerializeField]
-    Dictionary<DogTask, Vector3> _TaskPointDic;
+    Dictionary<PuppyTaskType, Vector3> _TaskPointDic;
 
     // Start is called before the first frame update
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
 
-        _TaskPointDic = new Dictionary<DogTask, Vector3>();
+        _TaskPointDic = new Dictionary<PuppyTaskType, Vector3>();
 
         for (int i = 0; i < TaskPoint.transform.childCount; i++)
         {
-            _TaskPointDic.Add((DogTask)i, TaskPoint.transform.GetChild(i).position);
+            _TaskPointDic.Add((PuppyTaskType)i, TaskPoint.transform.GetChild(i).position);
         }
         
     }
@@ -55,7 +55,7 @@ public class PuppyTask : MonoBehaviour
         }
     }
 
-    public void DoTask(DogTask taskType)
+    public void DoTask(PuppyTaskType taskType)
     {
         if (StartRunToTaskPointAction != null)
             StartRunToTaskPointAction.Invoke(taskType);

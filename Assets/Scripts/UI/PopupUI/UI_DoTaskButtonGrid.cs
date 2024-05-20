@@ -26,27 +26,27 @@ public class UI_DoTaskButtonGrid : UI_Popup
 
     void OnEatButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(DogTask.EatTask);
+        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.EatTask);
     }
 
     void OnTakeWalkButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(DogTask.TakeWalkTask);
+        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.TakeWalkTask);
     }
 
     void OnGoToiletButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(DogTask.GoToiletTask);
+        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.GoToiletTask);
     }
 
     void OnSleepButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(DogTask.SleepTask);
+        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.SleepTask);
     }
 
     void OnTakeWashButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(DogTask.TakeWashTask);
+        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.TakeWashTask);
     }
 
     // Start is called before the first frame update

@@ -10,7 +10,7 @@ public class Defines
         PointUp,
     }
 
-    public enum DogTask
+    public enum PuppyTaskType
     {
         EatTask,
         GoToiletTask,
@@ -19,7 +19,7 @@ public class Defines
         TakeWashTask
     }
 
-    public enum DogState
+    public enum PuppyState
     {
         Idle,
         MoveToClickedDest,

@@ -18,12 +18,12 @@ public class PuppyController : MonoBehaviour
     Animator _animator;
 
     [SerializeField]
-    DogState _currentState = DogState.Idle;
+    PuppyState _currentState = PuppyState.Idle;
 
-    DogTask _taskAboutToStart;
+    PuppyTaskType _taskAboutToStart;
 
     
-    public DogState CurrentState
+    public PuppyState CurrentState
     {
         get
         {
@@ -34,22 +34,22 @@ public class PuppyController : MonoBehaviour
             _currentState = value;
             switch(_currentState)
             {
-                case DogState.Idle:
+                case PuppyState.Idle:
                     _animator.CrossFade("Idle", 0.2f);
                     break;
-                case DogState.MoveToClickedDest:
+                case PuppyState.MoveToClickedDest:
                     _animator.CrossFade("Walk", 0.2f);
                     break;
-                case DogState.RunToTaskPoint:
+                case PuppyState.RunToTaskPoint:
                     _animator.CrossFade("Run", 0.2f);
                     break;
-                case DogState.Eat:
+                case PuppyState.Eat:
                     _animator.CrossFade("Eat", 0.2f);
                     break;
-                case DogState.Toliet:
+                case PuppyState.Toliet:
                     _animator.CrossFade("Toliet", 0.2f);
                     break;
-                case DogState.Sleep:
+                case PuppyState.Sleep:
                     _animator.CrossFade("Sleep", 0.2f);
                     break;
                 default:
@@ -60,24 +60,24 @@ public class PuppyController : MonoBehaviour
 
     void OnStartMove()
     {
-        CurrentState = DogState.MoveToClickedDest;
+        CurrentState = PuppyState.MoveToClickedDest;
     }
 
     void OnEndMove()
     {
-        CurrentState = DogState.Idle;
+        CurrentState = PuppyState.Idle;
     }
 
-    void OnStartRunToTaskPoint(DogTask taskType)
+    void OnStartRunToTaskPoint(PuppyTaskType taskType)
     {
-        CurrentState = DogState.RunToTaskPoint;
+        CurrentState = PuppyState.RunToTaskPoint;
         _taskAboutToStart = taskType;
 
     }
 
     void OnEndRunToTaskPoint()
     {
-        CurrentState = DogState.Idle;
+        CurrentState = PuppyState.Idle;
         StartCoroutine(DoTaskCoroutine(_taskAboutToStart));
     }
 
@@ -120,35 +120,35 @@ public class PuppyController : MonoBehaviour
         }
     }
 
-    IEnumerator DoTaskCoroutine(DogTask taskType)
+    IEnumerator DoTaskCoroutine(PuppyTaskType taskType)
     {
         GameObject taskOnGoingImage = null;
         switch (taskType)
         {
-            case DogTask.EatTask:
-                CurrentState = DogState.Eat;
+            case PuppyTaskType.EatTask:
+                CurrentState = PuppyState.Eat;
                 yield return new WaitForSeconds(1.0f);
                 _puppyVariable.Eat();
                 break;
-            case DogTask.GoToiletTask:
-                CurrentState = DogState.Toliet;
+            case PuppyTaskType.GoToiletTask:
+                CurrentState = PuppyState.Toliet;
                 yield return new WaitForSeconds(2.0f);
                 break;
-            case DogTask.SleepTask:
-                CurrentState = DogState.Sleep;
+            case PuppyTaskType.SleepTask:
+                CurrentState = PuppyState.Sleep;
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
                 taskOnGoingImage.GetComponentInChildren<Text>().text = "자는 중...";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Sleep();
                 break;
-            case DogTask.TakeWalkTask:
+            case PuppyTaskType.TakeWalkTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
                 taskOnGoingImage.GetComponentInChildren<Text>().text = "산책 시작!";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 break;
-            case DogTask.TakeWashTask:
+            case PuppyTaskType.TakeWashTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
                 taskOnGoingImage.GetComponentInChildren<Text>().text = "씻는 중...";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
@@ -158,7 +158,7 @@ public class PuppyController : MonoBehaviour
             default:
                 break;
         }
-        CurrentState = DogState.Idle;
+        CurrentState = PuppyState.Idle;
         if (taskOnGoingImage != null) GameObject.Destroy(taskOnGoingImage);
     }
 
@@ -168,11 +168,11 @@ public class PuppyController : MonoBehaviour
     {
         switch (CurrentState)
         {
-            case DogState.Idle:
+            case PuppyState.Idle:
                 break;
-            case DogState.MoveToClickedDest:
+            case PuppyState.MoveToClickedDest:
                 break;
-            case DogState.RunToTaskPoint:
+            case PuppyState.RunToTaskPoint:
                 break;
         }
     }
