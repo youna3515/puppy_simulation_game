@@ -1,36 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HouseScene : MonoBehaviour
 {
-    [SerializeField] GameObject _dogPrefab;
-    [SerializeField] GameObject _roomPrefab;
+    [SerializeField] GameObject _puppyPrefab;
+    [SerializeField] GameObject _RoomPrefab;
     [SerializeField] GameObject _houseSceneUIPrefab;
+    [SerializeField] NavMeshData _navMeshData;
 
-    DogController _dog;
-    public DogController Dog
+    GameObject _puppy;
+    public GameObject Puppy
     {
-        get { return _dog; }
+        get { return _puppy; }
+    }
+
+    GameObject _room;
+    public GameObject Room
+    {
+        get { return _room; }
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (_dogPrefab != null)
+        if (_houseSceneUIPrefab != null)
         {
-            _dog = Instantiate<GameObject>(_dogPrefab).GetComponent<DogController>();
-            Camera.main.GetComponent<FollowTarget>().Target = _dog.transform;
+            _room = Instantiate<GameObject>(_RoomPrefab);
+            NavMeshSurface navMeshSurface = _room.GetComponentInChildren<NavMeshSurface>();
+            navMeshSurface.navMeshData = _navMeshData;
         }
 
-        if (_roomPrefab != null)
+        if (_puppyPrefab != null)
         {
-            Instantiate<GameObject>(_roomPrefab);
+            _puppy = Instantiate<GameObject>(_puppyPrefab);
+            _puppy.GetComponent<PuppyTask>().TaskPoint = _room.transform.Find("TaskPoint").gameObject;
+            Camera.main.GetComponent<FollowTarget>().Target = _puppy.transform;
         }
 
         if (_houseSceneUIPrefab != null)
         {
-            Managers.UIManager.CurrentSceneUI = Instantiate<GameObject>(_houseSceneUIPrefab).GetComponent<UI_Scene>();
+            UI_HouseScene houseSceneUI = Instantiate<GameObject>(_houseSceneUIPrefab).GetComponent<UI_HouseScene>();
+            houseSceneUI.Player = _puppy.gameObject;
+            Managers.UIManager.CurrentSceneUI = houseSceneUI;
         }
     }
 

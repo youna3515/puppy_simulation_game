@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,7 +20,7 @@ public class UI_Base : MonoBehaviour
         
     }
 
-    protected void SaveUIObjectByEnum<T>(Type enumType) where T : UnityEngine.Object
+    protected void SaveUIObjectByEnum<T>(Type enumType, bool bFindDirectChildOnly = false) where T : UnityEngine.Object
     {
         string[] UIObjectNameArr = Enum.GetNames(enumType);
         List<UnityEngine.Object> uIObjectList = new List<UnityEngine.Object>();
@@ -29,11 +30,40 @@ public class UI_Base : MonoBehaviour
         {
             if (typeof(T) == typeof(GameObject))
             {
-                uIObjectList.Add(transform.Find(uIObjectName).gameObject);
+                if (bFindDirectChildOnly)
+                {
+                    uIObjectList.Add(transform.Find(uIObjectName).gameObject);
+                }
+                else
+                {
+                    RectTransform[] uIObjectRectTransformArr = gameObject.GetComponentsInChildren<RectTransform>();
+                    foreach (RectTransform uIObjectRectTransform in uIObjectRectTransformArr)
+                    {
+                        if (uIObjectRectTransform.gameObject.name == uIObjectName)
+                        {
+                            uIObjectList.Add(uIObjectRectTransform.gameObject);
+                        }
+                    }
+                }
+                
             }
             else
             {
-                uIObjectList.Add(transform.Find(uIObjectName).GetComponent<T>());
+                if (bFindDirectChildOnly)
+                {
+                    uIObjectList.Add(transform.Find(uIObjectName).GetComponent<T>());
+                }
+                else
+                {
+                    RectTransform[] uIObjectRectTransformArr = gameObject.GetComponentsInChildren<RectTransform>();
+                    foreach (RectTransform uIObjectRectTransform in uIObjectRectTransformArr)
+                    {
+                        if (uIObjectRectTransform.gameObject.name == uIObjectName)
+                        {
+                            uIObjectList.Add(uIObjectRectTransform.GetComponent<T>());
+                        }
+                    }
+                }
             }
         }    
     }

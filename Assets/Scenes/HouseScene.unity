@@ -325,9 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b503fff6003f5f47b9fccb879e281f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dogPrefab: {fileID: 1250563891165312132, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
-  _roomPrefab: {fileID: 7990104152015532719, guid: 743ff1df17c346741b7704a44a883132, type: 3}
+  _puppyPrefab: {fileID: 1250563891165312132, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
+  _RoomPrefab: {fileID: 1345306666546488759, guid: 743ff1df17c346741b7704a44a883132, type: 3}
   _houseSceneUIPrefab: {fileID: 9145627513185050086, guid: 1ab37407bd6108c429e62a2c94bc3166, type: 3}
+  _navMeshData: {fileID: 23800000, guid: ceba8af6cc07ded4d9e73db958019064, type: 2}
 --- !u!4 &1279128432
 Transform:
   m_ObjectHideFlags: 0

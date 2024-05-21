@@ -9,4 +9,23 @@ public class Defines
         PointDown,
         PointUp,
     }
+
+    public enum PuppyTaskType
+    {
+        EatTask,
+        GoToiletTask,
+        SleepTask,
+        TakeWalkTask,
+        TakeWashTask
+    }
+
+    public enum PuppyState
+    {
+        Idle,
+        MoveToClickedDest,
+        RunToTaskPoint,
+        Eat,
+        Toliet,
+        Sleep
+    }
 }
