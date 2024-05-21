@@ -137,20 +137,20 @@ public class PuppyController : MonoBehaviour
             case PuppyTaskType.SleepTask:
                 CurrentState = PuppyState.Sleep;
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "자는 중...";
+                taskOnGoingImage.GetComponentInChildren<Text>().text = "Go to sleep";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Sleep();
                 break;
             case PuppyTaskType.TakeWalkTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "산책 시작!";
+                taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a walk";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 break;
             case PuppyTaskType.TakeWashTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "씻는 중...";
+                taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a bath";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Wash();
