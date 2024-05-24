@@ -57,7 +57,7 @@ public class Managers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 마우스 클릭 처리
+        // ?????? ???? ????
         if (Input.GetMouseButtonDown(0))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -69,7 +69,7 @@ public class Managers : MonoBehaviour
             }
         }
 
-        // 터치 입력 처리
+        // ???? ???? ????
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -78,6 +78,7 @@ public class Managers : MonoBehaviour
                 if (!IsPointerOverUIObject(touch))
                 {
                     InputManager.PointerDownInputAction.Invoke(touch.position);
+                    InputManager.SwipeAction.Invoke(); 
                 }
             }
         }
