@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -43,12 +42,11 @@ public class PlayerController : MonoBehaviour
 
         // 화면 경계 계산
         float cameraZDistance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-        screenLeftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, cameraZDistance)).x;
-        screenRightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, cameraZDistance)).x;
+        screenLeftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, cameraZDistance)).x-3;
+        screenRightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, cameraZDistance)).x+3;
 
         lastPosition = transform.position;
     }
-
     IEnumerator StartCountdown()
     {
         // 카운트다운 텍스트를 화면에 표시
@@ -57,6 +55,10 @@ public class PlayerController : MonoBehaviour
         {
             countdownText.StartCountdown();
         }
+
+        // 게임 시작 전 카메라 위치 초기화
+        UpdateCameraPosition();
+
         yield return new WaitForSeconds(3); // 3초 카운트다운
         isRunning = true;
         animator.SetFloat("Speed", moveSpeed); // 카운트다운 후 Speed 값을 moveSpeed로 설정하여 달리기 시작
@@ -66,6 +68,8 @@ public class PlayerController : MonoBehaviour
             backgroundScroller.scrollSpeed = moveSpeed; // 배경 스크롤 속도 설정
         }
     }
+
+
 
     void Update()
     {
@@ -147,15 +151,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateCameraPosition()
+void UpdateCameraPosition()
+{
+    if (mainCamera != null)
     {
-        if (mainCamera != null)
-        {
-            Vector3 newCameraPosition = mainCamera.transform.position;
-            newCameraPosition.z = transform.position.z - 10; // 카메라와 플레이어의 Z 거리 유지
-            mainCamera.transform.position = newCameraPosition;
-        }
+        Vector3 newCameraPosition = mainCamera.transform.position;
+        newCameraPosition.x = transform.position.x; // 카메라의 X 위치를 강아지의 X 위치로 설정
+        //newCameraPosition.y = transform.position.y + 15; // 카메라를 위로 더 올려서 강아지를 내려다보게 설정
+        newCameraPosition.y = 5;
+        newCameraPosition.z = transform.position.z-5; // 카메라와 플레이어의 Z 거리 유지
+        mainCamera.transform.position = newCameraPosition;
+        //mainCamera.transform.LookAt(transform.position + new Vector3(0, 10, 0)); // 카메라가 강아지보다 약간 위를 보도록 설정
     }
+}
+
+
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -188,6 +199,9 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("TakeWalkManager.Instance is null");
         }
+
+        // UI를 표시
+        TakeWalkUIManager.Instance.ShowGameOverUI();
     }
 
     void UpdateScore()
@@ -197,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
         if (distanceTravelled >= 10f)
         {
-            ScoreManager.Instance.AddScore(10);
+            TakeWalkUIManager.Instance.AddScore(10);
             distanceTravelled = 0f;
         }
     }

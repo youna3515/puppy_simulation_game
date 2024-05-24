@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TakeWalkManager : MonoBehaviour
@@ -22,15 +20,6 @@ public class TakeWalkManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        distanceTraveled += Time.deltaTime * PlayerController.Instance.moveSpeed;
-        TakeWalkUIManager.Instance.UpdateDistance(distanceTraveled);
-        if (distanceTraveled >= maxDistance)
-        {
-            RewardSystem.Instance.GiveReward();
-        }
-    }
 
     public void EndGame()
     {
@@ -39,6 +28,6 @@ public class TakeWalkManager : MonoBehaviour
             bestDistance = distanceTraveled;
             SaveManager.Instance.SaveBestDistance(bestDistance);
         }
-        TakeWalkUIManager.Instance.ShowGameOver();
+        TakeWalkUIManager.Instance.ShowGameOverUI();
     }
 }
