@@ -442,9 +442,8 @@ MonoBehaviour:
   roadChunkPrefab: {fileID: 3346242641827562895, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
   obstaclePrefab: {fileID: 2572192975866763622, guid: 89fe3159889304bdf97874719cdad226, type: 3}
   chunkLength: 10
-  numInitialChunks: 5
-  player: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
-  numObstaclesPerChunk: 3
+  player: {fileID: 1760068502}
+  numObstaclesPerChunk: 1
 --- !u!4 &1548890983
 Transform:
   m_ObjectHideFlags: 0
@@ -478,7 +477,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  turnSpeed: 10
+  forwardSpeed: 10
+  mainCamera: {fileID: 1925569040}
   backgroundScroller: {fileID: 0}
+--- !u!4 &1760068502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
+  m_PrefabInstance: {fileID: 518130850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1878014938
 GameObject:
   m_ObjectHideFlags: 0

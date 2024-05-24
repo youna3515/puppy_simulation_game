@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float screenLeftEdge;
     private float screenRightEdge;
 
+
     void Awake()
     {
         if (Instance == null)
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
+        animator.SetTrigger("Live");
+
     }
 
     void Start()
@@ -153,9 +156,34 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            Debug.Log("Collided with obstacle");
+            StartCoroutine(EndGame());
+        }
+    }
+
+    IEnumerator EndGame()
+    {
+        // 강아지의 애니메이터에서 Die 트리거 설정
+        animator.SetTrigger("Die");
+
+        // 게임 종료 로직 (예: 플레이어의 움직임 멈추기 등)
+        isRunning = false;
+        forwardSpeed = 0;
+        moveSpeed = 0;
+
+        yield return new WaitForSeconds(2); // 2초 대기
+
+        // TakeWalkManager 인스턴스가 null인지 확인
+        if (TakeWalkManager.Instance != null)
+        {
             TakeWalkManager.Instance.EndGame();
+        }
+        else
+        {
+            Debug.LogError("TakeWalkManager.Instance is null");
         }
     }
 }

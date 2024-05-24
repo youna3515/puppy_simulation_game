@@ -36,6 +36,7 @@ public class RoadManager : MonoBehaviour
     void SpawnChunk()
     {
         GameObject newChunk = Instantiate(roadChunkPrefab, nextSpawnPosition, Quaternion.identity);
+        newChunk.tag = "Ground"; // 길 구간 태그 설정
         activeChunks.Enqueue(newChunk);
         nextSpawnPosition.z += chunkLength; // 다음 구간의 시작 위치를 업데이트
 
@@ -48,10 +49,11 @@ public class RoadManager : MonoBehaviour
 
                 Vector3 obstaclePosition = new Vector3(
                     obstacleXPosition,
-                    0.5f, // 장애물의 높이 (바닥에서 조금 띄워서 생성)
+                    0f, // 장애물의 높이 (바닥에서 조금 띄워서 생성)
                     nextSpawnPosition.z - chunkLength + Random.Range(2f, chunkLength) // 구간 내 랜덤 위치
                 );
-                Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity, newChunk.transform);
+                GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity, newChunk.transform);
+                obstacle.tag = "Obstacle"; // 장애물 태그 설정
             }
         }
     }
