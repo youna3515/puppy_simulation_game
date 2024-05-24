@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private float screenLeftEdge;
     private float screenRightEdge;
 
+    private float distanceTravelled = 0f;
+    private Vector3 lastPosition;
 
     void Awake()
     {
@@ -33,8 +35,6 @@ public class PlayerController : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
-        animator.SetTrigger("Live");
-
     }
 
     void Start()
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
         float cameraZDistance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
         screenLeftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, cameraZDistance)).x;
         screenRightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, cameraZDistance)).x;
+
+        lastPosition = transform.position;
     }
 
     IEnumerator StartCountdown()
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
             ClampPosition();
             UpdateAnimator();
             UpdateCameraPosition();
+            UpdateScore();
         }
     }
 
@@ -184,6 +187,18 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.LogError("TakeWalkManager.Instance is null");
+        }
+    }
+
+    void UpdateScore()
+    {
+        distanceTravelled += Vector3.Distance(transform.position, lastPosition);
+        lastPosition = transform.position;
+
+        if (distanceTravelled >= 10f)
+        {
+            ScoreManager.Instance.AddScore(10);
+            distanceTravelled = 0f;
         }
     }
 }
