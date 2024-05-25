@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: 5610587696310781948}
   - component: {fileID: 6036585220735717764}
   - component: {fileID: 4745229993212537257}
+  - component: {fileID: 6619103353743410988}
   - component: {fileID: 8918214419547979086}
   - component: {fileID: 1812702712009759278}
   m_Layer: 6
@@ -662,7 +663,7 @@ Animator:
   m_GameObject: {fileID: 5476527589919088031}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
-  m_Controller: {fileID: 9100000, guid: f7b34a7b7bb56ef4f8d093444e4bdd1c, type: 2}
+  m_Controller: {fileID: 9100000, guid: f43274bcbc8f1414982a37d91aefdb4a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -700,6 +701,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &6619103353743410988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476527589919088031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8673cd952b3bb4599b14e5108a86f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &8918214419547979086
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -733,10 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09969a8d41c3b48f085b833db07594d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  animationSpeed: 10
-  mainCamera: {fileID: 0}
-  backgroundScroller: {fileID: 0}
+  _moveSpeed: 10
 --- !u!1 &5647334406121762777
 GameObject:
   m_ObjectHideFlags: 0

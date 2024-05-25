@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 public class TakeWalkManager : MonoBehaviour
@@ -31,3 +32,4 @@ public class TakeWalkManager : MonoBehaviour
         TakeWalkUIManager.Instance.ShowGameOverUI();
     }
 }
+*/

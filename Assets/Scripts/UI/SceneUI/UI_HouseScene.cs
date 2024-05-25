@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +17,16 @@ public class UI_HouseScene : UI_Scene
     PuppyVariable _puppyVariable;
 
     [SerializeField] GameObject _uIDoTaskButtonGridPrefab;
+    [SerializeField] GameObject _uIGameOverUIPrefab;
+    [SerializeField] GameObject _uIWarningUIPrefab;
+
     GameObject _uIDoTaskButtonGrid;
 
     bool _bIsDoTaskButtonExist = false;
     enum Buttons
     {
-        ShowTaskButton
+        ShowTaskButton,
+        GameExitButton
     }
 
     enum Sliders
@@ -37,7 +42,7 @@ public class UI_HouseScene : UI_Scene
         if (_bIsDoTaskButtonExist == false)
         {
             _bIsDoTaskButtonExist = true;
-            _uIDoTaskButtonGrid = Instantiate<GameObject>(_uIDoTaskButtonGridPrefab);
+            _uIDoTaskButtonGrid = Managers.UIManager.ShowPopupUI<UI_DoTaskButtonGrid>().gameObject;
             _uIDoTaskButtonGrid.GetComponent<UI_DoTaskButtonGrid>().Player = _player;
         }
         else
@@ -45,6 +50,22 @@ public class UI_HouseScene : UI_Scene
             _bIsDoTaskButtonExist = false;
             GameObject.Destroy(_uIDoTaskButtonGrid);
         }
+    }
+
+    void OnGameExitButtonDown(PointerEventData pointerEventData)
+    {
+        float currentUnixTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        Managers.DataManager.LastQuitTime = currentUnixTime;
+
+        Managers.DataManager.Stress = _puppyVariable.Stress;
+        Managers.DataManager.Cleanliness = _puppyVariable.Cleanliness;
+        Managers.DataManager.Stamina = _puppyVariable.Stamina;
+        Managers.DataManager.Fullness = _puppyVariable.Fullness;
+        Managers.DataManager.Chance = _puppyVariable.Chance;
+        Managers.DataManager.Toilet = _puppyVariable.Toilet;
+
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 
     // Start is called before the first frame update
@@ -56,6 +77,7 @@ public class UI_HouseScene : UI_Scene
         SaveUIObjectByEnum<Slider>(typeof(Sliders));
 
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.ShowTaskButton).gameObject, Defines.UIEventType.PointDown ,OnShowTaskButtonDown);
+        BindFuntionToHandler(GetUIObject<Button>((int)Buttons.GameExitButton).gameObject, Defines.UIEventType.PointDown, OnGameExitButtonDown);
     }
 
     // Update is called once per frame

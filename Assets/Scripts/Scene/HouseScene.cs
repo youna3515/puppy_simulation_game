@@ -27,6 +27,17 @@ public class HouseScene : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Managers.DataManager.Chance == 0)
+        {
+            Debug.Log("신규 세션입니다");
+            Managers.DataManager.Stress = 0.0f;
+            Managers.DataManager.Cleanliness = 100.0f;
+            Managers.DataManager.Stamina = 100.0f;
+            Managers.DataManager.Fullness = 100.0f;
+            Managers.DataManager.Chance = 3;
+            Managers.DataManager.Toilet = 0.0f;
+        }
+
         if (_houseSceneUIPrefab != null)
         {
             _room = Instantiate<GameObject>(_RoomPrefab);

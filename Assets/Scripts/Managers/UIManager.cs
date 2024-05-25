@@ -17,8 +17,18 @@ public class UIManager
         }
     }
 
-    public void ShowSceneUI(GameObject sceneUI)
+    public UI_Popup ShowPopupUI<T>(string name = null) where T : UI_Popup
     {
-        ;
+        if (name == null)
+        {
+            name = typeof(T).Name;
+        }
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/PopupUI/" + name);
+        if (prefab != null)
+        {
+            GameObject go = Object.Instantiate<GameObject>(prefab);
+            return go.GetComponent<UI_Popup>();
+        }
+        return null;
     }
 }

@@ -52,6 +52,9 @@ public class PuppyController : MonoBehaviour
                 case PuppyState.Sleep:
                     _animator.CrossFade("Sleep", 0.2f);
                     break;
+                case PuppyState.WantToilet:
+                    _animator.CrossFade("WantToilet", 0.2f);
+                    break;
                 default:
                     break;
             }
@@ -72,13 +75,17 @@ public class PuppyController : MonoBehaviour
     {
         CurrentState = PuppyState.RunToTaskPoint;
         _taskAboutToStart = taskType;
-
     }
 
     void OnEndRunToTaskPoint()
     {
         CurrentState = PuppyState.Idle;
         StartCoroutine(DoTaskCoroutine(_taskAboutToStart));
+    }
+
+    void OnStartWantToilet()
+    {
+        CurrentState = PuppyState.WantToilet;
     }
 
     // Start is called before the first frame update
@@ -133,6 +140,7 @@ public class PuppyController : MonoBehaviour
             case PuppyTaskType.GoToiletTask:
                 CurrentState = PuppyState.Toliet;
                 yield return new WaitForSeconds(2.0f);
+                _puppyVariable.GoToilet();
                 break;
             case PuppyTaskType.SleepTask:
                 CurrentState = PuppyState.Sleep;
@@ -146,7 +154,14 @@ public class PuppyController : MonoBehaviour
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
                 taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a walk";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
-                yield return new WaitForSeconds(4.1f);
+                yield return new WaitForSeconds(2.1f);
+                Managers.DataManager.Stress = _puppyVariable.Stress;
+                Managers.DataManager.Cleanliness = _puppyVariable.Cleanliness;
+                Managers.DataManager.Stamina = _puppyVariable.Stamina;
+                Managers.DataManager.Fullness = _puppyVariable.Fullness;
+                Managers.DataManager.Chance = _puppyVariable.Chance;
+                Managers.DataManager.Toilet = _puppyVariable.Toilet;
+                Managers.SceneManager.LoadScene("TakeWalkScene");
                 break;
             case PuppyTaskType.TakeWashTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
@@ -163,12 +178,21 @@ public class PuppyController : MonoBehaviour
     }
 
 
+    void OnIdle()
+    {
+        if (_puppyVariable.Toilet >= 100.0f)
+        {
+            CurrentState = PuppyState.WantToilet;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         switch (CurrentState)
         {
             case PuppyState.Idle:
+                OnIdle();
                 break;
             case PuppyState.MoveToClickedDest:
                 break;

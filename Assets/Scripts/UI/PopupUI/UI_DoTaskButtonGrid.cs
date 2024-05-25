@@ -12,7 +12,7 @@ public class UI_DoTaskButtonGrid : UI_Popup
     public GameObject Player
     {
         get { return _player; }
-        set { if (_player == null) _player = value; }
+        set { _player = value; }
     }
 
     enum Buttons

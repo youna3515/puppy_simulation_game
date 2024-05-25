@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -96,3 +97,4 @@ public class TakeWalkUIManager : MonoBehaviour
         PlayerPrefs.SetInt("BestScore", bestScore);
     }
 }
+*/

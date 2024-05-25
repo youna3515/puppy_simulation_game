@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,3 +27,4 @@ public class CountdownTextController : MonoBehaviour
         countdownText.text = "";
     }
 }
+*/

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,20 @@ public class PuppyVariable : MonoBehaviour
     float _stressIncreaseRateByStamina = 0.0f;
     float _stressIncreaseRateByFullness = 0.0f;
     float _stressIncreaseRateByCleanliness = 0.0f;
+    float _stressIncreaseRateByToilet = 0.0f;
+
+    private void Start()
+    {
+        float currentUnixTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        float timeInterval = Managers.DataManager.LastQuitTime - currentUnixTime;
+
+        _stress = Managers.DataManager.Stress;
+        _stamina = Managers.DataManager.Stamina * (1 - (timeInterval / 86400.0f));
+        _fullness = Managers.DataManager.Fullness * (1 - (timeInterval / 86400.0f));
+        _cleanliness = Managers.DataManager.Cleanliness * (1 - (timeInterval / 86400.0f));
+        _toilet = Managers.DataManager.Toilet * (1 + (timeInterval / 86400.0f));
+        _chance = Managers.DataManager.Chance;
+    }
 
     void UpdateFullness()
     {
@@ -111,7 +126,20 @@ public class PuppyVariable : MonoBehaviour
             _stressIncreaseRateByStamina = 0.0f;
         }
 
-        _stress += (_stressIncreaseRateByFullness + _stressIncreaseRateByCleanliness + _stressIncreaseRateByStamina) * Time.deltaTime;
+        if (Toilet >= 200.0f)
+        {
+            _stressIncreaseRateByToilet = 6.0f;
+        }
+        else if (Toilet >= 150.0f)
+        {
+            _stressIncreaseRateByToilet = 3.0f;
+        }
+        else if (Toilet >= 100.0f)
+        {
+            _stressIncreaseRateByToilet = 1.0f;
+        }
+
+        _stress += (_stressIncreaseRateByFullness + _stressIncreaseRateByCleanliness + _stressIncreaseRateByStamina + _stressIncreaseRateByToilet + 10.0f) * Time.deltaTime;
         if (_stress >= 100.0f)
         {
             DecreaseChance();
@@ -134,11 +162,13 @@ public class PuppyVariable : MonoBehaviour
         if (_chance == 0)
         {
             Debug.Log("Game Over");
+            Managers.UIManager.ShowPopupUI<UI_GameOver>();
         }
         else
         {
             _stress = 50.0f;
             Debug.Log("기회 감소");
+            Managers.UIManager.ShowPopupUI<UI_Warning>();
         }
     }
 
@@ -160,6 +190,11 @@ public class PuppyVariable : MonoBehaviour
     {
         _stamina += 50.0f;
         Mathf.Clamp(_stamina, 0.0f, 100.0f);
+    }
+
+    public void GoToilet()
+    {
+        _toilet = 0; 
     }
 
 }

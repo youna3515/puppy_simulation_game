@@ -6,5 +6,4 @@ using UnityEngine;
 public class InputManager
 {
     public Action<Vector3> PointerDownInputAction = null;
-    public Action SwipeAction = null;
 }

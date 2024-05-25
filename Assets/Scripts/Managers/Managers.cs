@@ -39,12 +39,21 @@ public class Managers : MonoBehaviour
         }
     }
 
-    SceneManager _sceneManager = new SceneManager();
-    public static SceneManager SceneManager
+    SceneManagerEX _sceneManager = new SceneManagerEX();
+    public static SceneManagerEX SceneManager
     {
         get
         {
             return Instance._sceneManager;
+        }
+    }
+
+    DataManager _dataManager = new DataManager();
+    public static DataManager DataManager
+    {
+        get
+        {
+            return Instance._dataManager;
         }
     }
 
@@ -78,7 +87,6 @@ public class Managers : MonoBehaviour
                 if (!IsPointerOverUIObject(touch))
                 {
                     InputManager.PointerDownInputAction.Invoke(touch.position);
-                    InputManager.SwipeAction.Invoke(); 
                 }
             }
         }

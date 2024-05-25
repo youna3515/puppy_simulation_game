@@ -26,6 +26,7 @@ public class Defines
         RunToTaskPoint,
         Eat,
         Toliet,
-        Sleep
+        Sleep,
+        WantToilet
     }
 }

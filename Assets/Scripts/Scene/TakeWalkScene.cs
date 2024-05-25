@@ -26,9 +26,16 @@ public class TakeWalkScene : MonoBehaviour
 
         if (_takeWalkSceneUIPrefab != null)
         {
-            UI_HouseScene _takeWalkSceneUI = Instantiate<GameObject>(_takeWalkSceneUIPrefab).GetComponent<UI_HouseScene>();
-            _takeWalkSceneUI.Player = _puppy.gameObject;
+            UI_TakeWalkScene _takeWalkSceneUI = Instantiate<GameObject>(_takeWalkSceneUIPrefab).GetComponent<UI_TakeWalkScene>();
+            _takeWalkSceneUI.Player = _puppy;
             Managers.UIManager.CurrentSceneUI = _takeWalkSceneUI;
+        }
+
+        if (_roadSpawnerPrefab != null)
+        {
+            RoadSpawner roadSpawner = Instantiate<GameObject>(_roadSpawnerPrefab).GetComponent<RoadSpawner>();
+            roadSpawner.Player = _puppy.transform;
+
         }
     }
 }
