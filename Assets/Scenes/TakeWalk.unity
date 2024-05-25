@@ -522,15 +522,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3257881560579521592, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3257881560579521592, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3257881560579521592, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3257881560579521592, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -607,15 +607,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -627,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3948624697814626782, guid: 1ac636f6a6eed3544981e612be924b3b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1018,9 +1018,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadChunkPrefab: {fileID: 3346242641827562895, guid: ed58ae787e75c4ae0ba118b2e00541d8, type: 3}
   obstaclePrefab: {fileID: 2572192975866763622, guid: 89fe3159889304bdf97874719cdad226, type: 3}
+  backgroundPrefabs:
+  - {fileID: 3263309879470717334, guid: c8c090d1e8164aaab4533c546866b5eb, type: 3}
+  - {fileID: 3030869854898321255, guid: 51ca050ce6124586a850f9b29a0bc3c2, type: 3}
+  - {fileID: 5545881698878704934, guid: e857099595b743598bff50cc0a4dd6ec, type: 3}
+  - {fileID: 2911488201990153762, guid: 2bd45992c8514787830b8d71cbdf854d, type: 3}
+  - {fileID: 1123038430387507895, guid: 240fcbf839e341fcb27c922f48947580, type: 3}
   chunkLength: 10
   player: {fileID: 1760068502}
   numObstaclesPerChunk: 1
+  spawnRangeX: 20
+  roadWidth: 5
+  numBackgroundsPerChunk: 5
+  backgroundSpawnDistance: 2
 --- !u!4 &1548890983
 Transform:
   m_ObjectHideFlags: 0
@@ -1194,9 +1204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09969a8d41c3b48f085b833db07594d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  turnSpeed: 10
-  forwardSpeed: 10
+  moveSpeed: 10
+  animationSpeed: 10
   mainCamera: {fileID: 1925569040}
   backgroundScroller: {fileID: 0}
 --- !u!1 &1878014938

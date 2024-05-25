@@ -5,22 +5,23 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
 
-    public float moveSpeed = 5f;
-    public float turnSpeed = 10f; // 회전 속도
-    public float forwardSpeed = 10f; // 앞으로 이동하는 속도
+    public float moveSpeed = 10f; // 이동 속도
+    public float animationSpeed = 7f; // 애니메이션 속도
     public Camera mainCamera;
 
-    private Vector3 targetDirection;
-    private bool isTurning = false;
-    private Animator animator;
+    private Vector3 targetPosition; // 목표 위치
     private bool isRunning = false;
+    private Animator animator;
     public BackgroundScroller backgroundScroller; // 배경 스크롤러 참조
 
     private float screenLeftEdge;
     private float screenRightEdge;
+    private float roadWidth; // RoadManager에서 설정된 길의 폭
 
     private float distanceTravelled = 0f;
     private Vector3 lastPosition;
+
+    private Coroutine currentMoveCoroutine; // 현재 이동 코루틴을 추적
 
     void Awake()
     {
@@ -36,17 +37,23 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void SetRoadWidth(float width)
+    {
+        roadWidth = width + 4;
+    }
+
     void Start()
     {
         StartCoroutine(StartCountdown());
 
         // 화면 경계 계산
         float cameraZDistance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-        screenLeftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, cameraZDistance)).x-3;
-        screenRightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, cameraZDistance)).x+3;
+        screenLeftEdge = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, cameraZDistance)).x;
+        screenRightEdge = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, cameraZDistance)).x;
 
         lastPosition = transform.position;
     }
+
     IEnumerator StartCountdown()
     {
         // 카운트다운 텍스트를 화면에 표시
@@ -61,15 +68,14 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(3); // 3초 카운트다운
         isRunning = true;
-        animator.SetFloat("Speed", moveSpeed); // 카운트다운 후 Speed 값을 moveSpeed로 설정하여 달리기 시작
+        animator.SetFloat("Speed", animationSpeed); // 카운트다운 후 애니메이션 속도 설정하여 달리기 시작
 
+        // 배경 스크롤러 설정
         if (backgroundScroller != null)
         {
-            backgroundScroller.scrollSpeed = moveSpeed; // 배경 스크롤 속도 설정
+            backgroundScroller.scrollSpeed = moveSpeed;
         }
     }
-
-
 
     void Update()
     {
@@ -77,10 +83,6 @@ public class PlayerController : MonoBehaviour
         {
             HandleTouchInput();
             MoveForward();
-            if (isTurning)
-            {
-                TurnTowardsTarget();
-            }
             ClampPosition();
             UpdateAnimator();
             UpdateCameraPosition();
@@ -93,53 +95,56 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 inputPosition = Input.mousePosition;
+            Vector3 direction;
+
             if (inputPosition.x < Screen.width / 2)
             {
                 // 화면의 왼쪽 클릭
-                SetTargetDirection(Vector3.left + Vector3.forward);
+                direction = Vector3.left;
             }
             else
             {
                 // 화면의 오른쪽 클릭
-                SetTargetDirection(Vector3.right + Vector3.forward);
+                direction = Vector3.right;
             }
+
+            // 현재 진행 중인 이동 코루틴이 있으면 중지
+            if (currentMoveCoroutine != null)
+            {
+                StopCoroutine(currentMoveCoroutine);
+            }
+
+            // 새로운 이동 코루틴 시작
+            currentMoveCoroutine = StartCoroutine(MoveInDirection(direction));
         }
     }
 
-    void SetTargetDirection(Vector3 direction)
+    IEnumerator MoveInDirection(Vector3 direction)
     {
-        targetDirection = direction.normalized;
-        isTurning = true;
+        float elapsedTime = 0f;
+        while (elapsedTime < 0.3f)
+        {
+            // 목표 방향으로 부드럽게 이동
+            Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+            float halfRoadWidth = roadWidth / 2;
+            newPosition.x = Mathf.Clamp(newPosition.x, -halfRoadWidth, halfRoadWidth);
+
+            transform.position = newPosition;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     void MoveForward()
     {
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
-    }
-
-    void TurnTowardsTarget()
-    {
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection);
-        if (Vector3.Angle(transform.forward, targetDirection) < 0.1f)
-        {
-            isTurning = false;
-        }
+        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
     void ClampPosition()
     {
         Vector3 position = transform.position;
-        if (position.x < screenLeftEdge)
-        {
-            position.x = screenLeftEdge;
-            targetDirection = Vector3.forward;
-        }
-        else if (position.x > screenRightEdge)
-        {
-            position.x = screenRightEdge;
-            targetDirection = Vector3.forward;
-        }
+        float halfRoadWidth = roadWidth / 2;
+        position.x = Mathf.Clamp(position.x, -halfRoadWidth, halfRoadWidth);
         transform.position = position;
     }
 
@@ -147,26 +152,21 @@ public class PlayerController : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.SetFloat("Speed", moveSpeed); // 항상 moveSpeed 값을 사용하여 Speed 파라미터 설정
+            animator.SetFloat("Speed", animationSpeed); // 항상 animationSpeed 값을 사용하여 Speed 파라미터 설정
         }
     }
 
-void UpdateCameraPosition()
-{
-    if (mainCamera != null)
+    void UpdateCameraPosition()
     {
-        Vector3 newCameraPosition = mainCamera.transform.position;
-        newCameraPosition.x = transform.position.x; // 카메라의 X 위치를 강아지의 X 위치로 설정
-        //newCameraPosition.y = transform.position.y + 15; // 카메라를 위로 더 올려서 강아지를 내려다보게 설정
-        newCameraPosition.y = 5;
-        newCameraPosition.z = transform.position.z-5; // 카메라와 플레이어의 Z 거리 유지
-        mainCamera.transform.position = newCameraPosition;
-        //mainCamera.transform.LookAt(transform.position + new Vector3(0, 10, 0)); // 카메라가 강아지보다 약간 위를 보도록 설정
+        if (mainCamera != null)
+        {
+            Vector3 newCameraPosition = mainCamera.transform.position;
+            newCameraPosition.x = 0;
+            newCameraPosition.y = transform.position.y + 20; // 카메라를 위로 더 올려서 강아지를 내려다보게 설정
+            newCameraPosition.z = transform.position.z - 25; // 카메라와 플레이어의 Z 거리 유지
+            mainCamera.transform.position = newCameraPosition;
+        }
     }
-}
-
-
-
 
     void OnCollisionEnter(Collision collision)
     {
@@ -185,8 +185,8 @@ void UpdateCameraPosition()
 
         // 게임 종료 로직 (예: 플레이어의 움직임 멈추기 등)
         isRunning = false;
-        forwardSpeed = 0;
         moveSpeed = 0;
+        animationSpeed = 0;
 
         yield return new WaitForSeconds(2); // 2초 대기
 
