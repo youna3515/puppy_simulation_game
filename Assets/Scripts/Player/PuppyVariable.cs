@@ -158,8 +158,11 @@ public class PuppyVariable : MonoBehaviour
 
     public void DecreaseChance()
     {
+        _stress /= 2.0f;
         _chance--;
-        if (_chance == 0)
+
+        Managers.DataManager.Chance = _chance;
+        if (_chance < 0)
         {
             Debug.Log("Game Over");
             Managers.UIManager.ShowPopupUI<UI_GameOver>();

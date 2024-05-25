@@ -30,7 +30,7 @@ public class UI_Warning : UI_Popup
         SaveUIObjectByEnum<Button>(typeof(Buttons));
         SaveUIObjectByEnum<Text>(typeof(Texts));
 
-        GetUIObject<Text>((int)Texts.LeftChanceText).text = "Chance Decrease\r\n0 Chance Left";
+        GetUIObject<Text>((int)Texts.LeftChanceText).text = $"Chance Decrease\r\n{Managers.DataManager.Chance} Chance Left";
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.OKButton).gameObject, Defines.UIEventType.PointDown, OnOKButtonDown);
     }
 
