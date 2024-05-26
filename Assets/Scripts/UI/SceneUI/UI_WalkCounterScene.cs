@@ -10,7 +10,8 @@ public class UI_WalkCounterScene : UI_Scene
 {
     enum TextMeshProUGUIs
     {
-        CurrentTimeText
+        CurrentTimeText,
+        WalkCountText
     }
     enum Buttons
     {
@@ -24,9 +25,13 @@ public class UI_WalkCounterScene : UI_Scene
 
     public Action OnStartTimerAction;
 
+    WalkCounter _walkCounter;
+
     // Start is called before the first frame update
     void Start()
     {
+        _walkCounter = GetComponent<WalkCounter>();
+
         SaveUIObjectByEnum<Button>(typeof(Buttons));
         SaveUIObjectByEnum<TextMeshProUGUI>(typeof(TextMeshProUGUIs));
 
@@ -45,6 +50,7 @@ public class UI_WalkCounterScene : UI_Scene
         else
         {
             UI_TodayWalk popupUI = (UI_TodayWalk)(Managers.UIManager.ShowPopupUI<UI_TodayWalk>());
+            popupUI.WalkCount = _walkCounter.StepCount;
             popupUI.TimerText = GetUIObject<TextMeshProUGUI>((int)TextMeshProUGUIs.CurrentTimeText).text;
             Time.timeScale = 0.0f;
         }
@@ -57,6 +63,7 @@ public class UI_WalkCounterScene : UI_Scene
             _elapsedTime += Time.deltaTime;
             UpdateTimerText();
         }
+        GetUIObject<TextMeshProUGUI>((int)TextMeshProUGUIs.WalkCountText).text = $"Walk Count : {_walkCounter.StepCount}";
     }
 
     void UpdateTimerText()

@@ -6,7 +6,6 @@ public class WalkCounterScene : MonoBehaviour
 {
     [SerializeField] GameObject _puppyPrefab;
     [SerializeField] GameObject _walkCounterSceneUIPrefab;
-
     GameObject _puppy;
     public GameObject Puppy
     {

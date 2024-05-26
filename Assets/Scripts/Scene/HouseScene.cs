@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -30,12 +31,7 @@ public class HouseScene : MonoBehaviour
         if (Managers.DataManager.Chance == 0)
         {
             Debug.Log("신규 세션입니다");
-            Managers.DataManager.Stress = 0.0f;
-            Managers.DataManager.Cleanliness = 100.0f;
-            Managers.DataManager.Stamina = 100.0f;
-            Managers.DataManager.Fullness = 100.0f;
-            Managers.DataManager.Chance = 3;
-            Managers.DataManager.Toilet = 0.0f;
+            Managers.DataManager.InitVariables();
         }
 
         if (_houseSceneUIPrefab != null)

@@ -83,11 +83,6 @@ public class PuppyController : MonoBehaviour
         StartCoroutine(DoTaskCoroutine(_taskAboutToStart));
     }
 
-    void OnStartWantToilet()
-    {
-        CurrentState = PuppyState.WantToilet;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -158,7 +153,6 @@ public class PuppyController : MonoBehaviour
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(2.1f);
                 _puppyVariable.TakeWalk();
-                
                 break;
             case PuppyTaskType.TakeWashTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
@@ -166,6 +160,11 @@ public class PuppyController : MonoBehaviour
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Wash();
+                break;
+            case PuppyTaskType.GoWrongToiletTask:
+                CurrentState = PuppyState.Toliet;
+                yield return new WaitForSeconds(2.0f);
+                _puppyVariable.GoWrongToilet();
                 break;
             default:
                 break;
@@ -177,7 +176,7 @@ public class PuppyController : MonoBehaviour
 
     void OnIdle()
     {
-        if (_puppyVariable.Toilet >= 100.0f)
+        if (_puppyVariable.Toilet >= 50.0f)
         {
             CurrentState = PuppyState.WantToilet;
         }

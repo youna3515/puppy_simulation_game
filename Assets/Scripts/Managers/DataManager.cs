@@ -117,4 +117,30 @@ public class DataManager
             PlayerPrefs.SetInt("WalkCount", currentWalkCount);
         }
     }
+
+    public float CorrectToiletRatio
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("CorrectToiletRatio");
+        }
+        set
+        {
+            float correctToiletRatio = value;
+            PlayerPrefs.SetFloat("CorrectToiletRatio", value);
+        }
+    }
+
+    public void InitVariables()
+    {
+        Managers.DataManager.Stress = 0.0f;
+        Managers.DataManager.Cleanliness = 100.0f;
+        Managers.DataManager.Stamina = 100.0f;
+        Managers.DataManager.Fullness = 100.0f;
+        Managers.DataManager.Chance = 3;
+        Managers.DataManager.Toilet = 0.0f;
+        Managers.DataManager.CorrectToiletRatio = 50.0f;
+        Managers.DataManager.LastQuitTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
 }

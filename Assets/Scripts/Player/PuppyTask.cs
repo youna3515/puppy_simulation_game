@@ -19,6 +19,8 @@ public class PuppyTask : MonoBehaviour
 
     float _lookRotationSpeed = 8f;
 
+    float _radius = 8.0f;
+
     public GameObject TaskPoint
     {
         get { return _taskPoint; }
@@ -60,8 +62,24 @@ public class PuppyTask : MonoBehaviour
         if (StartRunToTaskPointAction != null)
             StartRunToTaskPointAction.Invoke(taskType);
 
-        Vector3 dest;
-        _taskPointDic.TryGetValue(taskType, out dest);
+
+        Vector3 dest = Vector3.zero;
+        if (taskType == PuppyTaskType.GoWrongToiletTask)
+        {
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * _radius;
+            randomDirection += transform.position;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomDirection, out hit, _radius, NavMesh.AllAreas))
+            {
+                dest = hit.position;
+            }
+        }
+        else
+        {
+            _taskPointDic.TryGetValue(taskType, out dest);
+        }
+        
         _agent.destination = dest;
 
         _bIsRunningToTaskPoint = true;

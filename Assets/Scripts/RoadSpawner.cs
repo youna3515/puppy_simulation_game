@@ -27,11 +27,16 @@ public class RoadSpawner : MonoBehaviour
     [SerializeField] int _numBackgroundsPerChunk; // 각 구간당 배경 에셋 개수
     [SerializeField] float _backgroundSpawnDistance; // 배경 에셋들이 산책로를 따라 배치될 간격
 
+    [SerializeField] List<Sprite> _sprites;
+    string _spritePath = "Images/Obstacle/";
+
     private Queue<GameObject> _activeChunks = new Queue<GameObject>();
     private Vector3 _nextSpawnPosition;
 
     void Start()
     {
+        _sprites = Resources.LoadAll<Sprite>(_spritePath).ToList<Sprite>();
+
         _backgroundPrefabs = Resources.LoadAll<GameObject>(_backgroundPrefabPath).ToList<GameObject>();
         _nextSpawnPosition = Vector3.zero;
 
@@ -75,6 +80,7 @@ public class RoadSpawner : MonoBehaviour
                     _nextSpawnPosition.z - _chunkLength + Random.Range(2f, _chunkLength) // 구간 내 랜덤 위치
                 );
                 GameObject obstacle = Instantiate(_obstaclePrefab, obstaclePosition, Quaternion.identity, newChunk.transform);
+                obstacle.GetComponentInChildren<SpriteRenderer>().sprite = _sprites[UnityEngine.Random.Range(0, _sprites.Count)];
                 obstacle.tag = "Obstacle"; // 장애물 태그 설정
             }
         }

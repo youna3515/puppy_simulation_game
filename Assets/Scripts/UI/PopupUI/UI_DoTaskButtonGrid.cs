@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class UI_DoTaskButtonGrid : UI_Popup
         get { return _player; }
         set { _player = value; }
     }
+
+    PuppyVariable _variable;
 
     enum Buttons
     {
@@ -36,7 +39,16 @@ public class UI_DoTaskButtonGrid : UI_Popup
 
     void OnGoToiletButtonDown(PointerEventData data)
     {
-        _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.GoToiletTask);
+        float rndVal = UnityEngine.Random.Range(0.0f, 100.0f);
+        Debug.Log(rndVal);
+        if (_variable.CorrectToiletRatio < rndVal)
+        {
+            _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.GoWrongToiletTask);
+        }
+        else
+        {
+            _player.GetComponent<PuppyTask>().DoTask(PuppyTaskType.GoToiletTask);
+        }
     }
 
     void OnSleepButtonDown(PointerEventData data)
@@ -52,6 +64,8 @@ public class UI_DoTaskButtonGrid : UI_Popup
     // Start is called before the first frame update
     void Start()
     {
+        _variable = _player.GetComponent<PuppyVariable>();
+
         SaveUIObjectByEnum<Button>(typeof(Buttons));
 
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.EatButton).gameObject, Defines.UIEventType.PointDown, OnEatButtonDown);

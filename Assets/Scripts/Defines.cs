@@ -16,7 +16,8 @@ public class Defines
         GoToiletTask,
         SleepTask,
         TakeWalkTask,
-        TakeWashTask
+        TakeWashTask,
+        GoWrongToiletTask
     }
 
     public enum PuppyState

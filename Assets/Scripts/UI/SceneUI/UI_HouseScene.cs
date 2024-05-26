@@ -22,7 +22,8 @@ public class UI_HouseScene : UI_Scene
     enum Buttons
     {
         ShowTaskButton,
-        GameExitButton
+        GameExitButton,
+        WalkCounterButton
     }
 
     enum Sliders
@@ -53,15 +54,15 @@ public class UI_HouseScene : UI_Scene
         float currentUnixTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         Managers.DataManager.LastQuitTime = currentUnixTime;
 
-        Managers.DataManager.Stress = _puppyVariable.Stress;
-        Managers.DataManager.Cleanliness = _puppyVariable.Cleanliness;
-        Managers.DataManager.Stamina = _puppyVariable.Stamina;
-        Managers.DataManager.Fullness = _puppyVariable.Fullness;
-        Managers.DataManager.Chance = _puppyVariable.Chance;
-        Managers.DataManager.Toilet = _puppyVariable.Toilet;
+        _puppyVariable.SaveVariables();
 
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
+    }
+
+    void OnWalkCounterButtonDown(PointerEventData pointerEventData)
+    {
+        Managers.SceneManager.LoadScene("WalkCounterScene");
     }
 
     // Start is called before the first frame update
@@ -74,6 +75,7 @@ public class UI_HouseScene : UI_Scene
 
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.ShowTaskButton).gameObject, Defines.UIEventType.PointDown ,OnShowTaskButtonDown);
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.GameExitButton).gameObject, Defines.UIEventType.PointDown, OnGameExitButtonDown);
+        BindFuntionToHandler(GetUIObject<Button>((int)Buttons.WalkCounterButton).gameObject, Defines.UIEventType.PointDown, OnWalkCounterButtonDown);
     }
 
     // Update is called once per frame

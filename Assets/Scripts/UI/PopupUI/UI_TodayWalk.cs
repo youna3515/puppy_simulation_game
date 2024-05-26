@@ -18,6 +18,18 @@ public class UI_TodayWalk : UI_Popup
         FinishButton
     }
 
+    int _walkCount;
+    public int WalkCount
+    {
+        get
+        {
+            return _walkCount;
+        }
+        set
+        {
+            _walkCount = value;
+        }
+    }
     string _timerText;
 
     public string TimerText
@@ -36,7 +48,7 @@ public class UI_TodayWalk : UI_Popup
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.FinishButton).gameObject, Defines.UIEventType.PointDown, OnFinishButtonDown);
         BindFuntionToHandler(GetUIObject<Button>((int)Buttons.ContinueButton).gameObject, Defines.UIEventType.PointDown, OnContinueButtonDown);
 
-        GetUIObject<TextMeshProUGUI>((int)TextMeshProUGUIs.PopupTimeText).text = "Today's walk: " + _timerText;
+        GetUIObject<TextMeshProUGUI>((int)TextMeshProUGUIs.PopupTimeText).text = "Total Time : " + _timerText + "\nTotal Walk : " + WalkCount;
     }
 
     void OnContinueButtonDown(PointerEventData data)
@@ -47,6 +59,7 @@ public class UI_TodayWalk : UI_Popup
 
     void OnFinishButtonDown(PointerEventData data)
     {
+        Time.timeScale = 1.0f;
         Managers.SceneManager.LoadScene("HouseScene");
     }
 

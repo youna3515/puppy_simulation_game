@@ -19,14 +19,19 @@ public class PuppyVariable : MonoBehaviour
     [SerializeField] int _chance = 3; //기회(목숨)
     public int Chance { get { return _chance; } }
 
+    [SerializeField] float _correctToiletRatio = 50.0f;
+    public float CorrectToiletRatio { get { return _correctToiletRatio; } }
+
     [SerializeField] float _fullnessDecreaseRate = 1.0f;
     [SerializeField] float _cleanlinessDecreaseRate = 1.0f;
     [SerializeField] float _staminaDecreaseRate = 1.0f;
 
-    float _stressIncreaseRateByStamina = 0.0f;
-    float _stressIncreaseRateByFullness = 0.0f;
-    float _stressIncreaseRateByCleanliness = 0.0f;
-    float _stressIncreaseRateByToilet = 0.0f;
+    [SerializeField] float _stressIncreaseRateByStamina = 0.0f;
+    [SerializeField] float _stressIncreaseRateByFullness = 0.0f;
+    [SerializeField] float _stressIncreaseRateByCleanliness = 0.0f;
+    [SerializeField] float _stressIncreaseRateByToilet = 0.0f;
+
+    bool _isTrainable = false;
 
     private void Start()
     {
@@ -126,17 +131,21 @@ public class PuppyVariable : MonoBehaviour
             _stressIncreaseRateByStamina = 0.0f;
         }
 
-        if (Toilet >= 200.0f)
+        if (Toilet >= 100.0f)
         {
             _stressIncreaseRateByToilet = 6.0f;
         }
-        else if (Toilet >= 150.0f)
+        else if (Toilet >= 80.0f)
         {
             _stressIncreaseRateByToilet = 3.0f;
         }
-        else if (Toilet >= 100.0f)
+        else if (Toilet >= 50.0f)
         {
             _stressIncreaseRateByToilet = 1.0f;
+        }
+        else
+        {
+            _stressIncreaseRateByToilet = 0.0f;
         }
 
         _stress += (_stressIncreaseRateByFullness + _stressIncreaseRateByCleanliness + _stressIncreaseRateByStamina + _stressIncreaseRateByToilet) * Time.deltaTime;
@@ -158,10 +167,7 @@ public class PuppyVariable : MonoBehaviour
 
     public void DecreaseChance()
     {
-        _stress /= 2.0f;
-        _chance--;
-
-        Managers.DataManager.Chance = _chance;
+        OnChanceDecrease();
         if (_chance < 0)
         {
             Debug.Log("Game Over");
@@ -170,17 +176,19 @@ public class PuppyVariable : MonoBehaviour
         else
         {
             _stress = 50.0f;
-            Debug.Log("기회 감소");
             Managers.UIManager.ShowPopupUI<UI_Warning>();
         }
     }
 
     public void Eat()
     {
-        _stamina += 25.0f;
-        Mathf.Clamp(_stamina, 0.0f, 100.0f);
         _fullness += 25.0f;
         Mathf.Clamp(_fullness, 0.0f, 100.0f);
+
+        if (_isTrainable == true)
+        {
+            _correctToiletRatio += 10.0f;
+        }
     }
 
     public void Wash()
@@ -197,10 +205,23 @@ public class PuppyVariable : MonoBehaviour
 
     public void GoToilet()
     {
-        _toilet = 0; 
+        _toilet = 0;
+        StartCoroutine(SetTrainable());
     }
 
     public void TakeWalk()
+    {
+        SaveVariables();
+        Managers.SceneManager.LoadScene("TakeWalkScene");
+    }
+
+    public void GoWrongToilet()
+    {
+        _toilet = 0;
+        _cleanliness -= 30.0f;
+    }
+
+    public void SaveVariables()
     {
         Managers.DataManager.Stress = Stress;
         Managers.DataManager.Cleanliness = Cleanliness;
@@ -208,6 +229,35 @@ public class PuppyVariable : MonoBehaviour
         Managers.DataManager.Fullness = Fullness;
         Managers.DataManager.Chance = Chance;
         Managers.DataManager.Toilet = Toilet;
-        Managers.SceneManager.LoadScene("TakeWalkScene");
+        Managers.DataManager.CorrectToiletRatio = CorrectToiletRatio;
+    }
+
+    public void OnChanceDecrease()
+    {
+        _stress /= 2.0f;
+        _cleanliness = 50.0f;
+        _stamina = 50.0f;
+        _fullness = 50.0f;
+        _toilet /= 50.0f;
+        _chance--;
+        Managers.DataManager.Chance = _chance;
+
+        Managers.DataManager.Stress = Stress;
+        Managers.DataManager.Cleanliness = Cleanliness;
+        Managers.DataManager.Stamina = Stamina;
+        Managers.DataManager.Fullness = Fullness;
+        Managers.DataManager.Toilet = Toilet;
+    }
+
+    IEnumerator SetTrainable()
+    {
+        _isTrainable = true;
+        yield return new WaitForSeconds(30.0f);
+        _isTrainable = false;
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveVariables();
     }
 }
