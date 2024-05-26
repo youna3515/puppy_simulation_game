@@ -56,7 +56,7 @@ public class UI_HouseScene : UI_Scene
 
         _puppyVariable.SaveVariables();
 
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 

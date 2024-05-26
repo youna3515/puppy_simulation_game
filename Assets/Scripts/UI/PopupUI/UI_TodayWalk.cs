@@ -60,6 +60,7 @@ public class UI_TodayWalk : UI_Popup
     void OnFinishButtonDown(PointerEventData data)
     {
         Time.timeScale = 1.0f;
+        Managers.DataManager.Stress -= (float)WalkCount / 3000.0f;
         Managers.SceneManager.LoadScene("HouseScene");
     }
 
