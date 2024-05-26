@@ -28,7 +28,7 @@ public class UI_StartScene : UI_Scene
 
     void GoTimerScene(PointerEventData data)
     {
-        Managers.SceneManager.LoadScene("StopwatchScene");
+        Managers.SceneManager.LoadScene("WalkCounterScene");
     }
     // Update is called once per frame
     void Update()

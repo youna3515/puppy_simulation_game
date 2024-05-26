@@ -57,8 +57,8 @@ public class UI_TakeWalkScene : UI_Scene
         LoadBestScore();
         UpdateScoreUI();
 
-        Player.GetComponent<PlayerController>().OnGameOverAction -= ShowGameOverUI;
-        Player.GetComponent<PlayerController>().OnGameOverAction += ShowGameOverUI;
+        Player.GetComponent<TakeWalkPuppyController>().OnGameOverAction -= ShowGameOverUI;
+        Player.GetComponent<TakeWalkPuppyController>().OnGameOverAction += ShowGameOverUI;
     }
     IEnumerator Countdown()
     {

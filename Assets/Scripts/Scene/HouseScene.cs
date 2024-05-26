@@ -48,6 +48,7 @@ public class HouseScene : MonoBehaviour
         if (_puppyPrefab != null)
         {
             _puppy = Instantiate<GameObject>(_puppyPrefab);
+            _puppy.transform.position = new Vector3(0, 0.5f, 0);
             _puppy.GetComponent<PuppyTask>().TaskPoint = _room.transform.Find("TaskPoint").gameObject;
             Camera.main.GetComponent<FollowTarget>().Target = _puppy.transform;
         }

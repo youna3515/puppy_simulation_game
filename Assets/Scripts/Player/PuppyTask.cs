@@ -22,7 +22,7 @@ public class PuppyTask : MonoBehaviour
     public GameObject TaskPoint
     {
         get { return _taskPoint; }
-        set { if (_taskPoint == null) _taskPoint = value; }
+        set { _taskPoint = value; }
     }
 
     [SerializeField]

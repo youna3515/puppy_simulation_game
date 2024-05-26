@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class TakeWalkPuppyController : MonoBehaviour
 {
     public enum TakeWalkPuppyState
     {

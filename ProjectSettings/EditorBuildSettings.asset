@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: 5415e6de9ffc94d6d97257c311054d64
   - enabled: 1
-    path: Assets/Scenes/StopwatchScene.unity
+    path: Assets/Scenes/WalkCounterScene.unity
     guid: 249f2ca3f33e94950b8eefaf95453c24
   m_configObjects: {}

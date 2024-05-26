@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,3 +25,5 @@ public class RewardSystem : MonoBehaviour
         Debug.Log("3km 달성! 보상을 받으세요!");
     }
 }
+
+*/

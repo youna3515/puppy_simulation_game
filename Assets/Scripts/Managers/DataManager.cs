@@ -105,5 +105,16 @@ public class DataManager
         }
     }
 
-
+    public int WalkCount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("WalkCount", 0);
+        }
+        set
+        {
+            int currentWalkCount = value;
+            PlayerPrefs.SetInt("WalkCount", currentWalkCount);
+        }
+    }
 }

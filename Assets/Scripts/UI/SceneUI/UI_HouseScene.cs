@@ -11,14 +11,10 @@ public class UI_HouseScene : UI_Scene
     public GameObject Player
     {
         get { return _player; }
-        set { if (_player == null) _player = value; }
+        set { _player = value; }
     }
 
     PuppyVariable _puppyVariable;
-
-    [SerializeField] GameObject _uIDoTaskButtonGridPrefab;
-    [SerializeField] GameObject _uIGameOverUIPrefab;
-    [SerializeField] GameObject _uIWarningUIPrefab;
 
     GameObject _uIDoTaskButtonGrid;
 

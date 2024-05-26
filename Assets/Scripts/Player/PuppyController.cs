@@ -105,6 +105,8 @@ public class PuppyController : MonoBehaviour
         _moveToTouchedOrClickedPoint.MoveStartAction += OnStartMove;
         _moveToTouchedOrClickedPoint.MoveEndAction -= OnEndMove;
         _moveToTouchedOrClickedPoint.MoveEndAction += OnEndMove;
+
+        CurrentState = PuppyState.Idle;
     }
     IEnumerator ShowTaskOnGoing(Image image, float fadeTime, float waitTime)
     {
@@ -155,13 +157,8 @@ public class PuppyController : MonoBehaviour
                 taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a walk";
                 StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
                 yield return new WaitForSeconds(2.1f);
-                Managers.DataManager.Stress = _puppyVariable.Stress;
-                Managers.DataManager.Cleanliness = _puppyVariable.Cleanliness;
-                Managers.DataManager.Stamina = _puppyVariable.Stamina;
-                Managers.DataManager.Fullness = _puppyVariable.Fullness;
-                Managers.DataManager.Chance = _puppyVariable.Chance;
-                Managers.DataManager.Toilet = _puppyVariable.Toilet;
-                Managers.SceneManager.LoadScene("TakeWalkScene");
+                _puppyVariable.TakeWalk();
+                
                 break;
             case PuppyTaskType.TakeWashTask:
                 taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);

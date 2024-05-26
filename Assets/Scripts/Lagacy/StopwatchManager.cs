@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,12 @@ public class StopwatchManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool isRunning = false;
     private Animator corgiAnimator;
+
+    enum StopWatchPuppyState
+    {
+        Run,
+        Idle
+    }
 
     void Start()
     {
@@ -114,3 +121,4 @@ public class StopwatchManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("HouseScene"); // HouseScene으로 씬 전환
     }
 }
+*/

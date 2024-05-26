@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 7214154815341654238}
   - component: {fileID: 610191347003439090}
   m_Layer: 6
-  m_Name: Corgi
+  m_Name: HouseCorgi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

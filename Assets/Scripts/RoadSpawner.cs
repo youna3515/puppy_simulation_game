@@ -36,7 +36,7 @@ public class RoadSpawner : MonoBehaviour
         _nextSpawnPosition = Vector3.zero;
 
         // 플레이어의 roadWidth 설정
-        _player.GetComponent<PlayerController>().SetRoadWidth(_roadWidth);
+        _player.GetComponent<TakeWalkPuppyController>().SetRoadWidth(_roadWidth);
 
         // 처음 몇 개의 길 구간을 생성
         for (int i = 0; i < 20; i++)

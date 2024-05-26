@@ -31,7 +31,7 @@ public class PuppyVariable : MonoBehaviour
     private void Start()
     {
         float currentUnixTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        float timeInterval = Managers.DataManager.LastQuitTime - currentUnixTime;
+        float timeInterval = currentUnixTime - Managers.DataManager.LastQuitTime;
 
         _stress = Managers.DataManager.Stress;
         _stamina = Managers.DataManager.Stamina * (1 - (timeInterval / 86400.0f));
@@ -139,7 +139,7 @@ public class PuppyVariable : MonoBehaviour
             _stressIncreaseRateByToilet = 1.0f;
         }
 
-        _stress += (_stressIncreaseRateByFullness + _stressIncreaseRateByCleanliness + _stressIncreaseRateByStamina + _stressIncreaseRateByToilet + 10.0f) * Time.deltaTime;
+        _stress += (_stressIncreaseRateByFullness + _stressIncreaseRateByCleanliness + _stressIncreaseRateByStamina + _stressIncreaseRateByToilet) * Time.deltaTime;
         if (_stress >= 100.0f)
         {
             DecreaseChance();
@@ -200,4 +200,14 @@ public class PuppyVariable : MonoBehaviour
         _toilet = 0; 
     }
 
+    public void TakeWalk()
+    {
+        Managers.DataManager.Stress = Stress;
+        Managers.DataManager.Cleanliness = Cleanliness;
+        Managers.DataManager.Stamina = Stamina;
+        Managers.DataManager.Fullness = Fullness;
+        Managers.DataManager.Chance = Chance;
+        Managers.DataManager.Toilet = Toilet;
+        Managers.SceneManager.LoadScene("TakeWalkScene");
+    }
 }
