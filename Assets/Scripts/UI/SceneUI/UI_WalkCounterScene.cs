@@ -23,6 +23,8 @@ public class UI_WalkCounterScene : UI_Scene
     [SerializeField] Sprite _beforeStartImage;
     [SerializeField] Sprite _afterStartImage;
 
+
+
     public Action OnStartTimerAction;
 
     WalkCounter _walkCounter;
