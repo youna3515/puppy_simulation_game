@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 9b92b8186dcedb54cba723ce1e79a989, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -236,8 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puppyPrefab: {fileID: 6753153571695339756, guid: 921f34608e8c1754fbbafc4f8543eefb, type: 3}
-  _walkCounterSceneUIPrefab: {fileID: 7854064607076206472, guid: 1a8fa7e9e283ec84d95b84f77c19ac77, type: 3}
-  _walkCounterPrefab: {fileID: 7701149521564907248, guid: d1feea3c632d27a428ef4cdfc35b84b4, type: 3}
+  _walkCounterSceneUIPrefab: {fileID: 7652252220150122464, guid: 15f2f29253621c241b3b1e60615f9678, type: 3}
 --- !u!4 &669989814
 Transform:
   m_ObjectHideFlags: 0
