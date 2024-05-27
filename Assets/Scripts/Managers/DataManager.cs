@@ -18,7 +18,7 @@ public class DataManager
     {
         get
         {
-            return PlayerPrefs.GetFloat("LastQuitTime");
+            return PlayerPrefs.GetFloat("LastQuitTime", -1.0f);
         }
         set
         {

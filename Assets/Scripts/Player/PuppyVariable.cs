@@ -35,8 +35,14 @@ public class PuppyVariable : MonoBehaviour
 
     private void Start()
     {
+        if (Managers.DataManager.LastQuitTime <= 0)
+        {
+            Debug.Log("Ã¹ Á¢¼Ó");
+            Managers.DataManager.InitVariables();
+        }
         float currentUnixTime = (float)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         float timeInterval = currentUnixTime - Managers.DataManager.LastQuitTime;
+        Managers.DataManager.LastQuitTime = currentUnixTime;
 
         _stress = Managers.DataManager.Stress;
         _stamina = Managers.DataManager.Stamina * (1 - (timeInterval / 86400.0f));

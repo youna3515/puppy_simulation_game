@@ -12,6 +12,17 @@ public class MoveToTouchedOrClickedPoint : MonoBehaviour
 
     float _lookRotationSpeed = 8f;
     bool _bIsMoving = false;
+    public bool IsMoving
+    {
+        get
+        {
+            return _bIsMoving;
+        }
+        set
+        {
+            _bIsMoving = value;
+        }
+    }
 
     public Action MoveStartAction = null;
     public Action MoveEndAction = null;

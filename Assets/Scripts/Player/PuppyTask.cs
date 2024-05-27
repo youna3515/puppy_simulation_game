@@ -16,6 +16,17 @@ public class PuppyTask : MonoBehaviour
     public Action EndRunToTaskPointAction = null;
 
     bool _bIsRunningToTaskPoint = false;
+    public bool IsRunningToTaskPoint
+    {
+        get
+        {
+            return _bIsRunningToTaskPoint;
+        }
+        set
+        {
+            _bIsRunningToTaskPoint = value;
+        }
+    }
 
     float _lookRotationSpeed = 8f;
 

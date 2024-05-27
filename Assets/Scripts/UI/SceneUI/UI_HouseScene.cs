@@ -62,6 +62,7 @@ public class UI_HouseScene : UI_Scene
 
     void OnWalkCounterButtonDown(PointerEventData pointerEventData)
     {
+        _puppyVariable.SaveVariables();
         Managers.SceneManager.LoadScene("WalkCounterScene");
     }
 

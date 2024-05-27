@@ -22,7 +22,6 @@ public class PuppyController : MonoBehaviour
 
     PuppyTaskType _taskAboutToStart;
 
-    
     public PuppyState CurrentState
     {
         get
@@ -63,6 +62,7 @@ public class PuppyController : MonoBehaviour
 
     void OnStartMove()
     {
+        _puppyTask.IsRunningToTaskPoint = false;
         CurrentState = PuppyState.MoveToClickedDest;
     }
 
@@ -73,6 +73,7 @@ public class PuppyController : MonoBehaviour
 
     void OnStartRunToTaskPoint(PuppyTaskType taskType)
     {
+        _moveToTouchedOrClickedPoint.IsMoving = false;
         CurrentState = PuppyState.RunToTaskPoint;
         _taskAboutToStart = taskType;
     }

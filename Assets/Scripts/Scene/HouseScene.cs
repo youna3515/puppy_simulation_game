@@ -28,7 +28,7 @@ public class HouseScene : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (Managers.DataManager.Chance == 0)
+        if (Managers.DataManager.Chance == -1)
         {
             Debug.Log("신규 세션입니다");
             Managers.DataManager.InitVariables();

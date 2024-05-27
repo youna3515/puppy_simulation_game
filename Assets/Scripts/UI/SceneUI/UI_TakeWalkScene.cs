@@ -33,7 +33,8 @@ public class UI_TakeWalkScene : UI_Scene
     enum Images
     {
         DarkBackground,
-        Blocker
+        Blocker,
+        ClickHereToMoveImage
     }
 
     enum Buttons
@@ -70,6 +71,7 @@ public class UI_TakeWalkScene : UI_Scene
         }
         GetUIObject<TextMeshProUGUI>((int)TextMeshProsUGUIs.CountdownText).text = "";
         GetUIObject<Image>((int)Images.Blocker).gameObject.SetActive(false);
+        GetUIObject<Image>((int)Images.ClickHereToMoveImage).gameObject.SetActive(false);
     }
 
     void RetryGame(PointerEventData data)
@@ -129,13 +131,13 @@ public class UI_TakeWalkScene : UI_Scene
 
     void UpdateScore()
     {
-        _currentScore = (int)(Player.transform.position.z - _playerZPos);
+        _currentScore = (int)((Player.transform.position.z - _playerZPos) * 10);
     }
 
     void DecreaseStressIfSuccess()
     {
         //HideGameOverUI();
-        if (_currentScore >= 300.0f)
+        if (_currentScore >= 3000.0f)
         {
             Debug.Log("산책 성공");
             Managers.DataManager.Stress = Managers.DataManager.Stress / 2;
