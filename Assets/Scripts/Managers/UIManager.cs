@@ -17,7 +17,7 @@ public class UIManager
         }
     }
 
-    public UI_Popup ShowPopupUI<T>(string name = null) where T : UI_Popup
+    public T ShowPopupUI<T>(string name = null) where T : UI_Popup
     {
         if (name == null)
         {
@@ -27,7 +27,7 @@ public class UIManager
         if (prefab != null)
         {
             GameObject go = Object.Instantiate<GameObject>(prefab);
-            return go.GetComponent<UI_Popup>();
+            return go.GetComponent<T>();
         }
         return null;
     }

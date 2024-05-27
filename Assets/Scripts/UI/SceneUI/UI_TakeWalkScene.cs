@@ -77,18 +77,18 @@ public class UI_TakeWalkScene : UI_Scene
     void RetryGame(PointerEventData data)
     {
         HideGameOverUI();
-        DecreaseStressIfSuccess();
         Managers.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     void BackToHome(PointerEventData data)
     {
-        DecreaseStressIfSuccess();
         Managers.SceneManager.LoadScene("HouseScene");
         
     }
     void ShowGameOverUI()
     {
+        
+        DecreaseStressIfSuccess();
         GetUIObject<Image>((int)Images.DarkBackground).gameObject.SetActive(true);
         GetUIObject<Button>((int)Buttons.RetryButton).gameObject.SetActive(true);
         GetUIObject<Button>((int)Buttons.GoBackButton).gameObject.SetActive(true);
@@ -139,6 +139,7 @@ public class UI_TakeWalkScene : UI_Scene
         //HideGameOverUI();
         if (_currentScore >= 3000.0f)
         {
+            Managers.UIManager.ShowPopupUI<UI_WalkSuccess>();
             Debug.Log("산책 성공");
             Managers.DataManager.Stress = Managers.DataManager.Stress / 2;
         }

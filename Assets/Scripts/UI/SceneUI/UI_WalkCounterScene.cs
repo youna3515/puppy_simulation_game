@@ -49,7 +49,7 @@ public class UI_WalkCounterScene : UI_Scene
         }
         else
         {
-            UI_TodayWalk popupUI = (UI_TodayWalk)(Managers.UIManager.ShowPopupUI<UI_TodayWalk>());
+            UI_TodayWalk popupUI = Managers.UIManager.ShowPopupUI<UI_TodayWalk>();
             popupUI.WalkCount = _walkCounter.StepCount;
             popupUI.TimerText = GetUIObject<TextMeshProUGUI>((int)TextMeshProUGUIs.CurrentTimeText).text;
             Time.timeScale = 0.0f;

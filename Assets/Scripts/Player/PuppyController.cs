@@ -12,8 +12,6 @@ public class PuppyController : MonoBehaviour
     MoveToTouchedOrClickedPoint _moveToTouchedOrClickedPoint;
     PuppyTask _puppyTask;
     PuppyVariable _puppyVariable;
-    [SerializeField]
-    GameObject _taskOnGoingPrefab;
 
     Animator _animator;
 
@@ -104,26 +102,7 @@ public class PuppyController : MonoBehaviour
 
         CurrentState = PuppyState.Idle;
     }
-    IEnumerator ShowTaskOnGoing(Image image, float fadeTime, float waitTime)
-    {
-        image.fillAmount = 0;
-        float time = 0;
-        while (time < fadeTime)
-        {
-            image.fillAmount += Time.deltaTime / fadeTime;
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(waitTime);
-
-        while (time > 0)
-        {
-            image.fillAmount -= Time.deltaTime / fadeTime;
-            time -= Time.deltaTime;
-            yield return null;
-        }
-    }
+    
 
     IEnumerator DoTaskCoroutine(PuppyTaskType taskType)
     {
@@ -142,23 +121,17 @@ public class PuppyController : MonoBehaviour
                 break;
             case PuppyTaskType.SleepTask:
                 CurrentState = PuppyState.Sleep;
-                taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "Go to sleep";
-                StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
+                Managers.UIManager.ShowPopupUI<UI_TaskOnGoing>().TaskType = PuppyTaskType.SleepTask;
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Sleep();
                 break;
             case PuppyTaskType.TakeWalkTask:
-                taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a walk";
-                StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
+                Managers.UIManager.ShowPopupUI<UI_TaskOnGoing>().TaskType = PuppyTaskType.TakeWalkTask;
                 yield return new WaitForSeconds(2.1f);
                 _puppyVariable.TakeWalk();
                 break;
             case PuppyTaskType.TakeWashTask:
-                taskOnGoingImage = Instantiate<GameObject>(_taskOnGoingPrefab);
-                taskOnGoingImage.GetComponentInChildren<Text>().text = "Take a bath";
-                StartCoroutine(ShowTaskOnGoing(taskOnGoingImage.GetComponentInChildren<Image>(), 1.0f, 2.0f));
+                Managers.UIManager.ShowPopupUI<UI_TaskOnGoing>().TaskType = PuppyTaskType.TakeWashTask;
                 yield return new WaitForSeconds(4.1f);
                 _puppyVariable.Wash();
                 break;

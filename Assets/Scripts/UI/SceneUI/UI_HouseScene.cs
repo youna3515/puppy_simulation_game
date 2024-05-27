@@ -36,6 +36,7 @@ public class UI_HouseScene : UI_Scene
 
     void OnShowTaskButtonDown(PointerEventData pointerEventData)
     {
+        GetUIObject<Button>((int)Buttons.ShowTaskButton).transform.Rotate(new Vector3(0, 0, 180));
         if (_bIsDoTaskButtonExist == false)
         {
             _bIsDoTaskButtonExist = true;
