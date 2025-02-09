@@ -41,6 +41,7 @@ public class MoveToTouchedOrClickedPoint : MonoBehaviour
             FaceTarget();
             CheckIfMovementCompleted();
         }
+
     }
 
     void ClickOrTouchToMove(Vector3 inputPosition)
